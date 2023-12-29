@@ -21,8 +21,8 @@ function [LAN] = lan_read_file(filename,type)
 %  30.08.2012
   
 
-if nargin == 0
-    [file, path] = uigetfile('*.*', 'import file using IO');
+if nargin == 0 || isempty(filename)
+    [file, path] = uigetfile('*.*', 'import file using ...');
     if isequal(file,0) || isequal(path,0)
                     disp('User selected Cancel')
                     LAN = 0;
@@ -98,6 +98,7 @@ switch type
         DATA = LAN.data;
     %%% BrainAmp
     case {'BrainAmp', 'BrainVision','BA','BV'}
+        filename = strrep(filename,'.eeg','');
         type='';
         %end
         DATA = ft_read_data([filename '.eeg']);
